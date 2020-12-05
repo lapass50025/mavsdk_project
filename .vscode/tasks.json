@@ -5,6 +5,8 @@
             "label": "C/C++: g++-9 build active file",
             "command": "/usr/bin/g++-9",
             "args": [
+                "-Wno-unused-parameter",
+                "-Wno-write-strings",
                 "-g",
                 "${file}",
                 "-o",
