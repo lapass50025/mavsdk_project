@@ -14,10 +14,12 @@ int main(int argc, char** argv)
     std::shared_ptr<mavsdk::Mission> mission;
 
     std::vector<mavsdk::Mission::MissionItem> misionVector;
+    std::vector<POINTTYPE> inputVector;
 
     double fLatitude = 0;
     double fLongitude = 0;
     float fAltitude = 0;
+    float fSpeed = 0;
 
     std::string strUrl;
 
@@ -96,7 +98,57 @@ int main(int argc, char** argv)
     // Mission WayPoint 생성하기
     if( nRet )
     {
-        nRet = MissionTestPoint(&misionVector, 5.0f, 20.0f);
+        fLatitude = 47.3979634;
+        fLongitude = 8.5455553;
+        MissionAddPoint(&misionVector, fLatitude, fLongitude, 5.0f, 20.0f);
+
+        fLatitude = 47.3980652;
+        fLongitude = 8.5452689;
+        MissionAddPoint(&misionVector, fLatitude, fLongitude, 5.0f, 20.0f);
+
+        // 사각형
+        fLatitude = 47.3978793;
+        fLongitude = 8.5451496;
+        MissionAddPoint(&misionVector, fLatitude, fLongitude, 5.0f, 20.0f);
+
+        inputVector.clear();
+        MissionMakePointRectangle(&inputVector, 47.3978793, 8.5451496, 47.3977277,8.5450557, 0.0001);
+        MissionAddPoint(&misionVector, inputVector[0].x, inputVector[0].y, 5.0f, 20.0f);
+        MissionAddPoint(&misionVector, inputVector[3].x, inputVector[3].y, 5.0f, 20.0f);
+
+        fLatitude = 47.3977277;
+        fLongitude = 8.5450557;
+        MissionAddPoint(&misionVector, fLatitude, fLongitude, 5.0f, 20.0f);
+
+        fLatitude = 47.3974635;
+        fLongitude = 8.5449296;
+        MissionAddPoint(&misionVector, fLatitude, fLongitude, 5.0f, 20.0f);
+
+        fLatitude = 47.3972738;
+        fLongitude = 8.5451496;
+        MissionAddPoint(&misionVector, fLatitude, fLongitude, 5.0f, 20.0f);
+
+        // 사각형 1
+        fLatitude = 47.3973392;
+        fLongitude = 8.5452166;
+        // MissionAddPoint(&misionVector, fLatitude, fLongitude, 5.0f, 20.0f);
+
+        // 사각형 2
+        fLatitude = 47.3975197;
+        fLongitude = 8.5454544;
+        // MissionAddPoint(&misionVector, fLatitude, fLongitude, 5.0f, 20.0f);
+
+        inputVector.clear();
+        MissionMakePointCircle(&inputVector, 47.3973392, 8.5452166, 47.3975197, 8.5454544, 160, 0.0001);
+        MissionMakePointVector(&misionVector, &inputVector, 5.0f, 20.0f);
+
+        fLatitude = 47.3975643;
+        fLongitude = 8.5455144;
+        MissionAddPoint(&misionVector, fLatitude, fLongitude, 5.0f, 20.0f);
+
+        fLatitude = 47.3977059;
+        fLongitude = 8.5455251;
+        MissionAddPoint(&misionVector, fLatitude, fLongitude, 5.0f, 20.0f);
     }
 
     // Mission Upload 하기
@@ -120,10 +172,10 @@ int main(int argc, char** argv)
 
     std::this_thread::sleep_for(std::chrono::seconds(3));
 
-    // 리턴홈
+    // 착륙
     if( nRet )
     {
-        nRet = ActionRtl(telemetry, action);
+        nRet = ActionLand(telemetry, action);
         std::this_thread::sleep_for(std::chrono::seconds(3));
     }
 

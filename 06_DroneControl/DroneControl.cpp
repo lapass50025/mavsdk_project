@@ -366,6 +366,38 @@ int MissionTestPoint(std::vector<mavsdk::Mission::MissionItem> *pVector, float f
 
 
 
+int MissionAddPoint(std::vector<mavsdk::Mission::MissionItem> *pVector, double fLatitude, double fLongitude, float fAltitude, float fSpeed)
+{
+    mavsdk::Mission::MissionItem mission_item;
+
+    int nRet = 1;
+
+
+
+    if( nRet )
+    {
+        // range: -90 to +90
+        mission_item.latitude_deg = fLatitude;
+        // range: -180 to +180
+        mission_item.longitude_deg = fLongitude;
+
+
+        // takeoff altitude
+        mission_item.relative_altitude_m = fAltitude;          
+        mission_item.speed_m_s = fSpeed;
+        // stop on the waypoint
+#if 0
+        mission_item.is_fly_through = false;                
+        mission_item.gimbal_pitch_deg = 20.0f;
+        mission_item.gimbal_yaw_deg = 60.0f;
+        mission_item.camera_action = Mission::MissionItem::CameraAction::TakePhoto;
+#endif
+        pVector->push_back(mission_item);
+    }
+
+    return nRet;
+}
+
 /*
  *
  */
@@ -400,6 +432,84 @@ int MissionMakePointVector(std::vector<mavsdk::Mission::MissionItem> *pVector, s
     #endif
             pVector->push_back(mission_item);
         }
+    }
+
+    return nRet;
+}
+
+
+
+/*
+ *
+ */
+int MissionMakePointRectangle(std::vector<POINTTYPE> *pInputVector, double fLatitude1, double fLongitude1, double fLatitude2, double fLongitude2, double fDistance)
+{
+    POINTTYPE pos1;
+    POINTTYPE pos2;
+
+    POINTTYPE pos3;
+    POINTTYPE pos4;
+
+    int nRet = 1;
+
+
+
+    if( nRet )
+    {
+        pos1.x = fLatitude1;
+        pos1.y = fLongitude1;
+
+        pos2.x = fLatitude2;
+        pos2.y = fLongitude2;
+
+        nRet = PositionFootPerpendicular(pos1, pos2, fDistance, &pos3, &pos4);
+        pInputVector->push_back(pos3);
+        pInputVector->push_back(pos4);
+        
+        nRet = PositionFootPerpendicular(pos2, pos1, fDistance, &pos3, &pos4);
+        pInputVector->push_back(pos3);
+        pInputVector->push_back(pos4);
+    }
+
+    return nRet;
+}
+
+
+/*
+ *
+ */
+int MissionMakePointCircle(std::vector<POINTTYPE> *pInputVector, double fLatitude1, double fLongitude1, double fLatitude2, double fLongitude2, int nRotateAngle, double fDistance)
+{
+    POINTTYPE centerPoint;
+    POINTTYPE pos;
+    double angle = 0.0f;
+    int nAngle = 0;
+    int i = 0;
+
+    int nRet = 1;
+
+
+
+    if( nRet )
+    {
+        centerPoint.x = (fLatitude2 - fLatitude1) / 2.0f + fLatitude1;
+        centerPoint.y = (fLongitude2 - fLongitude1) / 2.0f + fLongitude1;
+
+        angle = atan2((fLongitude2 - fLongitude1), (fLatitude2 - fLatitude1));
+        nAngle = angle * 180.0 / M_PI;
+
+        if( fLongitude2 > fLongitude1 )
+        {
+            nAngle = nAngle + 180;
+        }
+
+        for (i = nAngle; i <= nAngle + nRotateAngle; i = i + 10)
+        {
+            pos.x = centerPoint.x + sin(i * M_PI / 180.0f) * fDistance;
+            pos.y = centerPoint.y + cos(i * M_PI / 180.0f) * fDistance;
+
+            pInputVector->push_back(pos);
+        }        
     }
 
     return nRet;

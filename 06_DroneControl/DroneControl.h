@@ -15,7 +15,10 @@ int ActionLand(std::shared_ptr<mavsdk::Telemetry> telemetry, std::shared_ptr<mav
 int ActionRtl(std::shared_ptr<mavsdk::Telemetry> telemetry, std::shared_ptr<mavsdk::Action> action);
 
 int MissionTestPoint(std::vector<mavsdk::Mission::MissionItem> *pVector, float fAltitude, float fSpeed);
+int MissionAddPoint(std::vector<mavsdk::Mission::MissionItem> *pVector, double fLatitude, double fLongitude, float fAltitude, float fSpeed);
 int MissionMakePointVector(std::vector<mavsdk::Mission::MissionItem> *pVector, std::vector<POINTTYPE> *pInputVector, float fAltitude, float fSpeed);
+int MissionMakePointRectangle(std::vector<POINTTYPE> *pInputVector, double fLatitude1, double fLongitude1, double fLatitude2, double fLongitude2, double fDistance);
+int MissionMakePointCircle(std::vector<POINTTYPE> *pInputVector, double fLatitude1, double fLongitude1, double fLatitude2, double fLongitude2, int nRotateAngle, double fDistance);
 int MissionUpload(std::shared_ptr<mavsdk::Mission> mission, std::vector<mavsdk::Mission::MissionItem> *pVector);
 int MissionRun(std::shared_ptr<mavsdk::Mission> mission);
 
