@@ -10,7 +10,7 @@
                 "-Wno-unused-parameter",
                 "-Wno-write-strings",
                 "-g",
-                "${file}",
+                "${fileDirname}/*.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
                 "-I/usr/local/include/mavsdk",
