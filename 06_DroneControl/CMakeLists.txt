@@ -13,7 +13,9 @@ endif()
 find_package(MAVSDK REQUIRED)
 
 add_executable(${PROJECT_NAME}
-    ${PROJECT_NAME}.cpp DroneControl.cpp
+    ${PROJECT_NAME}.cpp
+    DroneControl.cpp
+    Position.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

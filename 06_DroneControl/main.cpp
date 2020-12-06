@@ -96,7 +96,7 @@ int main(int argc, char** argv)
     // Mission WayPoint 생성하기
     if( nRet )
     {
-        nRet = MissionMakePoint(&misionVector, fLatitude, fLongitude, fAltitude + 1.0f);
+        nRet = MissionTestPoint(&misionVector, 5.0f, 20.0f);
     }
 
     // Mission Upload 하기
@@ -106,6 +106,7 @@ int main(int argc, char** argv)
         std::this_thread::sleep_for(std::chrono::seconds(2));
     }
 
+    // 시동걸기
     if( nRet )
     {
         ActionArm(telemetry, action);
@@ -119,7 +120,7 @@ int main(int argc, char** argv)
 
     std::this_thread::sleep_for(std::chrono::seconds(3));
 
-    // 착륙하기
+    // 리턴홈
     if( nRet )
     {
         nRet = ActionRtl(telemetry, action);

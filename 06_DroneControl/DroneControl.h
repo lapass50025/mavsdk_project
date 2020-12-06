@@ -14,8 +14,8 @@ int ActionTakeoff(std::shared_ptr<mavsdk::Telemetry> telemetry, std::shared_ptr<
 int ActionLand(std::shared_ptr<mavsdk::Telemetry> telemetry, std::shared_ptr<mavsdk::Action> action);
 int ActionRtl(std::shared_ptr<mavsdk::Telemetry> telemetry, std::shared_ptr<mavsdk::Action> action);
 
-int MissionMakePoint(std::vector<mavsdk::Mission::MissionItem> *pVector, double fLatitude, double fLongitude, float fAltitude);
-int MissionMakePointVector(std::vector<mavsdk::Mission::MissionItem> *pVector, std::vector<POINTTYPE> *pInputVector);
+int MissionTestPoint(std::vector<mavsdk::Mission::MissionItem> *pVector, float fAltitude, float fSpeed);
+int MissionMakePointVector(std::vector<mavsdk::Mission::MissionItem> *pVector, std::vector<POINTTYPE> *pInputVector, float fAltitude, float fSpeed);
 int MissionUpload(std::shared_ptr<mavsdk::Mission> mission, std::vector<mavsdk::Mission::MissionItem> *pVector);
 int MissionRun(std::shared_ptr<mavsdk::Mission> mission);
 

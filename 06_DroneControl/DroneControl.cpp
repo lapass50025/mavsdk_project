@@ -313,7 +313,7 @@ int ActionRtl(std::shared_ptr<mavsdk::Telemetry> telemetry, std::shared_ptr<mavs
 /*
  *
  */
-int MissionMakePoint(std::vector<mavsdk::Mission::MissionItem> *pVector, double fLatitude, double fLongitude, float fAltitude)
+int MissionTestPoint(std::vector<mavsdk::Mission::MissionItem> *pVector, float fAltitude, float fSpeed)
 {
     mavsdk::Mission::MissionItem mission_item;
 
@@ -322,9 +322,8 @@ int MissionMakePoint(std::vector<mavsdk::Mission::MissionItem> *pVector, double 
 
 
     // 기본값 넣기
-    mission_item.latitude_deg = fLatitude;
-    mission_item.longitude_deg = fLongitude;
     mission_item.relative_altitude_m = fAltitude;
+    mission_item.speed_m_s = fSpeed;
 
     // waypoint 추가하기
     if( nRet )
@@ -333,32 +332,33 @@ int MissionMakePoint(std::vector<mavsdk::Mission::MissionItem> *pVector, double 
         mission_item.latitude_deg = 47.398170327054473;
         // range: -180 to +180
         mission_item.longitude_deg = 8.5456490218639658;
+
+#if 0
         // takeoff altitude
         mission_item.relative_altitude_m = 10.0f;          
-        mission_item.speed_m_s = 5.0f;
+        mission_item.speed_m_s = 20.0f;
         // stop on the waypoint
         mission_item.is_fly_through = false;                
-#if 0
         mission_item.gimbal_pitch_deg = 20.0f;
         mission_item.gimbal_yaw_deg = 60.0f;
         mission_item.camera_action = Mission::MissionItem::CameraAction::TakePhoto;
 #endif
         pVector->push_back(mission_item);
 
-/*
         mission_item.latitude_deg = 47.398139363821485;
         mission_item.longitude_deg = 8.5453846156597137;
-        mission_item.relative_altitude_m = 10.0f;
-        mission_item.speed_m_s = 5.0f;
+
 #if 0
+        mission_item.relative_altitude_m = 10.0f;
+        mission_item.speed_m_s = 20.0f;
+
         mission_item.is_fly_through = true;
         mission_item.gimbal_pitch_deg = -45.0f;
         mission_item.gimbal_yaw_deg = 0.0f;
         mission_item.camera_action = Mission::MissionItem::CameraAction::StartVideo;
 #endif
         pVector->push_back(mission_item);
-    }
-*/
+
     }
 
     return nRet;
@@ -369,7 +369,7 @@ int MissionMakePoint(std::vector<mavsdk::Mission::MissionItem> *pVector, double 
 /*
  *
  */
-int MissionMakePointVector(std::vector<mavsdk::Mission::MissionItem> *pVector, std::vector<POINTTYPE> *pInputVector)
+int MissionMakePointVector(std::vector<mavsdk::Mission::MissionItem> *pVector, std::vector<POINTTYPE> *pInputVector, float fAltitude, float fSpeed)
 {
     mavsdk::Mission::MissionItem mission_item;
 
@@ -389,8 +389,8 @@ int MissionMakePointVector(std::vector<mavsdk::Mission::MissionItem> *pVector, s
             // range: -180 to +180
             mission_item.longitude_deg = i->y;
             // takeoff altitude
-            mission_item.relative_altitude_m = 10.0f;          
-            mission_item.speed_m_s = 20.0f;
+            mission_item.relative_altitude_m = fAltitude;          
+            mission_item.speed_m_s = fSpeed;
             // stop on the waypoint
             mission_item.is_fly_through = false;                
     #if 0
