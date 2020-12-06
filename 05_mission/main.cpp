@@ -251,11 +251,57 @@ int ActionLand(shared_ptr<Telemetry> telemetry, shared_ptr<Action> action)
 
         if (resultAction == Action::Result::Success)
         {
-            cout << "Takeoff 성공 :" << resultAction << endl;
+            cout << "Land 성공 :" << resultAction << endl;
         }
         else
         {
-            cout << "Takeoff 실패 :" << resultAction << endl;
+            cout << "Land 실패 :" << resultAction << endl;
+            nRet = 0;
+        }
+    }
+
+    if( nRet )
+    {
+        // 드론이 공중에 있는지 검사하기
+        while (telemetry->in_air())
+        {
+            cout << "내려가는 중..." << endl;
+            sleep_for(seconds(1));
+        }
+        
+        cout << "착륙 완료" << endl;
+    }
+
+    // disarm 기다리기
+    sleep_for(seconds(3));
+    
+    return nRet;
+}
+
+
+
+/*
+ *
+ */
+int ActionRtl(shared_ptr<Telemetry> telemetry, shared_ptr<Action> action)
+{
+    Action::Result resultAction;
+
+    int nRet = 1;
+
+
+    // 착륙하기
+    if( nRet )
+    {
+        resultAction = action->return_to_launch();
+
+        if (resultAction == Action::Result::Success)
+        {
+            cout << "Return To Launch 성공 :" << resultAction << endl;
+        }
+        else
+        {
+            cout << "Return To Launch 실패 :" << resultAction << endl;
             nRet = 0;
         }
     }
@@ -534,7 +580,7 @@ int main(int argc, char** argv)
     // 착륙하기
     if( nRet )
     {
-        nRet = ActionLand(telemetry, action);
+        nRet = ActionRtl(telemetry, action);
         sleep_for(seconds(3));
     }
     
