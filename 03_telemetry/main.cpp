@@ -151,12 +151,45 @@ int InitTelemetry(shared_ptr<System> system, shared_ptr<Telemetry> telemetry)
     return nRet;
 }
 
+
+
+/*
+ *
+ */
+int GetPosition(shared_ptr<Telemetry> telemetry, double *pfLatitude, double *pfLongitude, float *pfAltitude)
+{
+    Telemetry::Position position;
+
+    int nRet = 1;
+
+
+
+    if( telemetry == NULL )
+    {
+        nRet = 0;
+    }
+
+    if( nRet )
+    {
+        position = telemetry->position();
+
+        *pfLatitude = position.latitude_deg;
+        *pfLongitude = position.longitude_deg;
+        *pfAltitude = position.relative_altitude_m;
+    }
+
+    return nRet;
+}
+
 int main(int argc, char** argv)
 {
     Mavsdk mavsdk;
     shared_ptr<System> system;
     shared_ptr<Telemetry> telemetry;
-    shared_ptr<Action> action;
+
+    double fLatitude = 0;
+    double fLongitude = 0;
+    float fAltitude = 0;
 
     string strUrl;
 
@@ -179,8 +212,22 @@ int main(int argc, char** argv)
     // Telemetry, Action 객체 얻기
     if( nRet )
     {
-        telemetry = std::make_shared<Telemetry>(system);
+        telemetry = make_shared<Telemetry>(system);
+    }
+
+    // Telemetry 초기화하기
+    if( nRet )
+    {
         nRet = InitTelemetry(system, telemetry);
+    }
+
+    // 현재 위치 정보 출력하기
+    if( nRet )
+    {
+        GetPosition(telemetry, &fLatitude, &fLongitude, &fAltitude);
+        cout << fLatitude << endl;
+        cout << fLongitude << endl;
+        cout << fAltitude << endl;
     }
 
     return 0;
