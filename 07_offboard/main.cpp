@@ -73,7 +73,7 @@ int main(int argc, char** argv)
         offboard = std::make_shared<mavsdk::Offboard>(system);
     }
 
-#if 1
+#if 0
     // Arm 하기
     if( nRet )
     {
@@ -153,7 +153,7 @@ int main(int argc, char** argv)
         // MissionAddPoint(&misionVector, fLatitude, fLongitude, 5.0f, 20.0f);
 
         inputVector.clear();
-        MissionMakePointCircle(&inputVector, 47.3973392, 8.5452166, 47.3975197, 8.5454544, 160, 0.0001);
+        MissionMakePointCircle(&inputVector, DIRECTION_CCW, 47.3973392, 8.5452166, 47.3975197, 8.5454544, 160, 0.0001);
         MissionMakePointVector(&misionVector, &inputVector, 5.0f, 20.0f);
 
         fLatitude = 47.3975643;

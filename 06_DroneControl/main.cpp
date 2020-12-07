@@ -106,6 +106,10 @@ int main(int argc, char** argv)
         fLongitude = 8.5452689;
         MissionAddPoint(&misionVector, fLatitude, fLongitude, 5.0f, 20.0f);
 
+#if 1
+        MissionMakePointCircle(&inputVector, DIRECTION_CCW, 47.3978793, 8.5451496, 47.3977277, 8.5450557, 180, 0.0001);
+        MissionMakePointVector(&misionVector, &inputVector, 5.0f, 20.0f);
+#else
         // 사각형
         fLatitude = 47.3978793;
         fLongitude = 8.5451496;
@@ -119,6 +123,7 @@ int main(int argc, char** argv)
         fLatitude = 47.3977277;
         fLongitude = 8.5450557;
         MissionAddPoint(&misionVector, fLatitude, fLongitude, 5.0f, 20.0f);
+#endif
 
         fLatitude = 47.3974635;
         fLongitude = 8.5449296;
@@ -139,7 +144,7 @@ int main(int argc, char** argv)
         // MissionAddPoint(&misionVector, fLatitude, fLongitude, 5.0f, 20.0f);
 
         inputVector.clear();
-        MissionMakePointCircle(&inputVector, 47.3973392, 8.5452166, 47.3975197, 8.5454544, 180, 0.0001);
+        MissionMakePointCircle(&inputVector, DIRECTION_CCW, 47.3973392, 8.5452166, 47.3975197, 8.5454544, 180, 0.0001);
         MissionMakePointVector(&misionVector, &inputVector, 5.0f, 20.0f);
 
         fLatitude = 47.3975643;

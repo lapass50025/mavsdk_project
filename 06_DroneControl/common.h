@@ -23,6 +23,12 @@ typedef struct tagPosition
     double y;
 } POINTTYPE;
 
+//
+typedef enum {
+    DIRECTION_CW = 0,
+    DIRECTION_CCW
+} ENUMDRECTIONTYPE;
+
 
 
 #include "Position.h"

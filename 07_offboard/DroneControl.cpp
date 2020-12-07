@@ -477,7 +477,7 @@ int MissionMakePointRectangle(std::vector<POINTTYPE> *pInputVector, double fLati
 /*
  *
  */
-int MissionMakePointCircle(std::vector<POINTTYPE> *pInputVector, double fLatitude1, double fLongitude1, double fLatitude2, double fLongitude2, int nRotateAngle, double fDistance)
+int MissionMakePointCircle(std::vector<POINTTYPE> *pInputVector, ENUMDRECTIONTYPE direction, double fLatitude1, double fLongitude1, double fLatitude2, double fLongitude2, int nRotateAngle, double fDistance)
 {
     POINTTYPE centerPoint;
     POINTTYPE pos;
@@ -497,7 +497,7 @@ int MissionMakePointCircle(std::vector<POINTTYPE> *pInputVector, double fLatitud
         angle = atan2((fLatitude2 - fLatitude1), (fLongitude2 - fLongitude1));
         nAngle = angle * 180.0 / M_PI;
 
-        if( fLongitude2 > fLongitude1 )
+        if( direction == DIRECTION_CCW )
         {
             nAngle = nAngle + 180;
         }
