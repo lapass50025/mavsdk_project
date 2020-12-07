@@ -494,7 +494,7 @@ int MissionMakePointCircle(std::vector<POINTTYPE> *pInputVector, double fLatitud
         centerPoint.x = (fLatitude2 - fLatitude1) / 2.0f + fLatitude1;
         centerPoint.y = (fLongitude2 - fLongitude1) / 2.0f + fLongitude1;
 
-        angle = atan2((fLongitude2 - fLongitude1), (fLatitude2 - fLatitude1));
+        angle = atan2((fLatitude2 - fLatitude1), (fLongitude2 - fLongitude1));
         nAngle = angle * 180.0 / M_PI;
 
         if( fLongitude2 > fLongitude1 )
