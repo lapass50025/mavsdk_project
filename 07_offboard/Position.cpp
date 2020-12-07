@@ -80,7 +80,7 @@ int PositionFootPerpendicular(POINTTYPE pos1, POINTTYPE pos2, double fDistance, 
     }
     else
     {
-        angle = -atan2((pos2.x - pos1.x), (pos2.y - pos1.y));
+        angle = -atan2((pos2.y - pos1.y), (pos2.x - pos1.x));
 
         pPos3->x = pos1.x + sin(angle) * fDistance;
         pPos3->y = pos1.y + cos(angle) * fDistance;
